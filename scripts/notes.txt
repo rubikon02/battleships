@@ -1,0 +1,5 @@
+improvements: 
+    - usuwanie statków z planszy
+
+ComputerLogic TODO:
+    - losowe strzelanie zastąpione poszukiwaniem najdłuższego statku

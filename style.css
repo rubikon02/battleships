@@ -1,0 +1,259 @@
+/* general */
+
+:root {
+    --red: #ff8888;
+    --blue: #abcdef;
+    --redAccent: #ff7777;
+    --blueAccent: #9abcef;
+    --gray: #ebebeb;
+    --green: #aaffaa;
+}
+
+body {
+    margin: 0;
+    width: 100vw;
+    user-select: none;
+}
+
+/* game */
+
+game-container {
+    width: 100%;
+    height: 100%;
+    margin-top: 200px;
+}
+
+#topRow { 
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+}
+
+#centerRow { 
+    height: 451px;
+    display: flex;
+    justify-content: center;
+}
+
+#buttonsContainer {
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#buttonsContainer > *{ 
+    margin: 10px;
+    font-size: 14px;
+}
+
+/* ships-menu */
+
+ships-menu {
+    padding: 1px 50px;
+    position: absolute;
+    left: 0;
+}
+
+menu-ship {
+    display: block;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+menu-ship:hover > ship-element {
+    background-color: var(--red)
+}
+
+menu-ship.selected > ship-element {
+    cursor: default !important;
+    background-color: var(--blue);
+}
+
+ship-element {
+    width: 29px;
+    height: 29px;
+    border: 1px solid black;
+    margin-top: -1px;
+    margin-left: -1px;
+    float: left;
+    background-color: #ebebeb;
+    transition: background-color 0.2s;
+}
+
+/* board */
+
+#boardsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: absolute;
+}
+
+.board {
+    width: 301px;
+    height: 301px;
+    position: relative;
+    float: left;
+    margin: 25px;
+}
+
+board-tile {
+    width: 29px;
+    height: 29px;
+    border: 1px solid black;
+    position: absolute;
+    transition: background-color .2s, border .1s, margin-top .1s, margin-left .1s;
+}
+
+board-tile::after {
+    content: "";
+    transition: opacity 0.2s;  
+    opacity: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: 1;   
+}
+board-tile.missed::after {
+    background-image: url("./img/dot.svg");
+    opacity: 1;
+}
+board-tile.hit::after {
+    background-image: url("./img/cross.svg");
+    opacity: 1;
+}
+
+finished-game-board > board-tile:hover {
+    border: 3px solid black;
+    z-index: 10;
+    margin-left: -2px;
+    margin-top: -2px;
+}
+
+.sunk {
+    background-color: var(--red) !important;
+}
+
+#playerBoard .sunk {
+    animation: none !important;
+    
+}
+#playerBoard .hit {
+    animation: hitAnimation 0.9s;
+}
+
+#computerBoard .revealedShip {
+    animation: revealAnimation 2s;
+}
+
+.revealedShip {
+    background-color: var(--blue);
+}
+
+@keyframes hitAnimation {
+    0% {background-color: "";}
+    10% {background-color: var(--red);}
+    100% {background-color: "";}
+}
+@keyframes revealAnimation {
+    0% {background-color: "";}
+    30% {background-color: var(--red);}
+    100% {background-color: "";}
+}
+
+.highlightCorrect {
+    background-color: var(--green);
+    cursor: pointer;
+}
+
+.highlightIncorrect {
+    background-color: var(--red) !important;
+}
+
+.fireAllowed board-tile:not(.missed):not(.hit):not(.sunk){
+    cursor: pointer !important;
+}
+
+#computerBoard board-tile{
+    cursor: default;
+}
+
+/* pop-up */
+
+pop-up {
+    z-index: 100;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    animation: showPopup 1s;
+}
+pop-up:after {
+    content: "";
+    width: 100%;
+    height: 200%;
+    background-color: rgba(0,0,0,0.4);
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;   
+}
+pop-up button {
+    cursor: pointer;
+}
+pop-up #restart:hover {
+    background-color: var(--blueAccent);
+}
+pop-up #close:hover {
+    background-color: var(--redAccent);
+}
+@keyframes showPopup {
+    0% {
+        opacity: 0; 
+        top:-1000px;
+    }
+    70% {
+        opacity:1
+    }
+    100% {
+        top:0px;
+    }
+}
+pop-up .content{
+    /* border: 2px solid black; */
+    background-color: #fefefe;
+    width: 80%;
+    max-width: 600px;
+    margin: 15% auto;
+}
+pop-up .text {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+pop-up .buttons {
+    display: flex;
+    justify-content: space-around;
+}
+pop-up #close{
+    background-color: var(--red);
+}
+pop-up #restart{
+    background-color: var(--blue);
+}
+
+pop-up button{
+    border: 1px solid black;
+    display: inline-block;
+    width: 100%;
+    height: 50px;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 10px;
+}
